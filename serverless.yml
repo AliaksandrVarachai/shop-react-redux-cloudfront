@@ -6,6 +6,7 @@ provider:
   name: aws
   runtime: nodejs14.x
   # setup profile for AWS CLI.
+  region: eu-west-1
   profile: epam-admin2
 
 plugins:
@@ -17,7 +18,7 @@ plugins:
 
 custom:
   client:
-    bucketName: varachai-s3-static-fe
+    bucketName: varachai-shop-fe
     distributionFolder: build
     indexDocument: index.html
     errorDocument: index.html

@@ -67,6 +67,6 @@ Details:
 Details:
   - Committed to `task-2` branch and created a pull request.
   - Links for crosscheck:
-    - [Automatically created S3 bucket](http://varachai-s3-1.s3-website-us-east-1.amazonaws.com/) - displays `403 Forbidden`
-    - [Website with minor changes](https://ddnwm4rx95lo1.cloudfront.net/) - shows the updated website.
+    - [Automatically created S3 bucket](http://varachai-shop-fe.s3-website-eu-west-1.amazonaws.com) - displays `403 Forbidden`
+    - [Website with minor changes](https://d1fxaqepkkpfnn.cloudfront.net) - shows the updated website.
 
