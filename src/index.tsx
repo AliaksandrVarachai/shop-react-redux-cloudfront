@@ -6,15 +6,27 @@ import {store} from 'store/store';
 import {Provider} from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 import CssBaseline from "@material-ui/core/CssBaseline";
-import axios from 'axios';
+import axios, {AxiosError} from 'axios';
+
+const showErrorAlert = (error: AxiosError, details: string) => {
+  const { response } = error;
+  const defaultMessage = 'unknown';
+  alert(`Error ${response?.status}: ${response?.data?.Message || defaultMessage}\n\n${details}`);
+};
 
 axios.interceptors.response.use(
   response => {
     return response;
   },
-  function(error) {
-    if (error?.response?.status === 400) {
-      alert(error.response.data?.data);
+  error => {
+    switch (error.response?.status) {
+      case 401:
+        showErrorAlert(error, 'Add "authorization_token" to your local storage');
+        break;
+      case 403:
+        showErrorAlert(error, '"authorization_token" is provided but did not pass the check');
+      default:
+        // console.log(error);
     }
 
     return Promise.reject(error?.response ?? error);
