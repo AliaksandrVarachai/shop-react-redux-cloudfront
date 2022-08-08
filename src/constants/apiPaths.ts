@@ -1,4 +1,4 @@
-const bffApiGatewayUrl = 'https://tou4gq4voh.execute-api.eu-west-1.amazonaws.com'
+const bffApiGatewayUrl = 'https://7c125j3nkd.execute-api.eu-west-1.amazonaws.com'
 
 const API_PATHS = {
   product: 'https://.execute-api.eu-west-1.amazonaws.com/dev',
