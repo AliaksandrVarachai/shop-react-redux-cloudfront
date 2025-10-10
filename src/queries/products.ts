@@ -11,7 +11,10 @@ export function useAvailableProducts() {
       const res = await axios.get<AvailableProduct[]>(
         `${API_PATHS.bff}/products`
       );
-      return res.data;
+      return res.data.map(({ product_id, ...rest }) => ({
+          ...rest,
+          id: product_id,
+      }));
     }
   );
 }
