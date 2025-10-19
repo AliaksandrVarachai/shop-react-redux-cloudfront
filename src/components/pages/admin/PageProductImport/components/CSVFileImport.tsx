@@ -14,7 +14,7 @@ export default function CSVFileImport({ url, title }: CSVFileImportProps) {
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files && files.length > 0) {
-      const file = files[0];
+      const file = files[0] as File;
       setFile(file);
     }
   };
@@ -24,6 +24,10 @@ export default function CSVFileImport({ url, title }: CSVFileImportProps) {
   };
 
   const uploadFile = async () => {
+    if (!file) {
+        console.error('No file selected for upload');
+        return;
+    }
     console.log("uploadFile to", url);
 
     // Get the presigned URL
