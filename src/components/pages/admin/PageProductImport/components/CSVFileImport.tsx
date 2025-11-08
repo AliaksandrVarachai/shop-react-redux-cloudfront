@@ -1,7 +1,7 @@
 import React from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 type CSVFileImportProps = {
   url: string;
@@ -31,21 +31,42 @@ export default function CSVFileImport({ url, title }: CSVFileImportProps) {
     console.log("uploadFile to", url);
 
     // Get the presigned URL
-    const response = await axios({
-      method: "GET",
-      url,
-      params: {
-        filename: encodeURIComponent(file.name),
-      },
-    });
-    console.log("File to upload: ", file.name);
-    console.log("Uploading to: ", response.data);
-    const result = await fetch(response.data, {
-      method: "PUT",
-      body: file,
-    });
-    console.log("Result: ", result);
-    setFile(undefined);
+    try {
+        const response = await axios({
+            method: "GET",
+            headers: {
+                Authorization: `Base ${localStorage.getItem('authorization_token')}`
+            },
+            withCredentials: true,
+            url,
+            params: {
+                filename: encodeURIComponent(file.name),
+            },
+        });
+        console.log("File to upload: ", file.name);
+        console.log("Uploading to: ", response.data);
+        const result = await fetch(response.data, {
+            method: "PUT",
+            body: file,
+        });
+        console.log("Result: ", result);
+        setFile(undefined);
+    } catch(error) {
+        switch ((error as AxiosError).response?.status) {
+            case 401: {
+                alert('Unauthorized error.\nPlease add authorization token to local storage via console');
+                return;
+            }
+            case 403: {
+                alert('Forbidden access.\nPlease check your authorization token and replace it via console');
+                return;
+            }
+            default: {
+                alert('Unexpected error while requested signed URL');
+                return;
+            }
+        }
+    }
   };
   return (
     <Box>
